@@ -6,8 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    #return 'Hello World!'
-    return "反向路由" + url_for('query')
+    return 'Hello World!'
 
 
 @app.route('/user', methods=['post'])
@@ -32,12 +31,11 @@ def query():
 def ad():
     return 'ok'
 
+
 # 反向路由
 @app.route('/route')
 def route():
-    #return "反向路由" + url_for('query')
-    return '123456'
-
+    return "反向路由" + url_for('query')
 
 
 if __name__ == '__main__':
