@@ -1,17 +1,19 @@
 # -*- coding:utf-8 -*-
-from flask import Flask, request, url_for
-
+from flask import Flask, request, url_for, render_template
+from models import User
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    world = "Hello World"
+    return render_template('index.html', world=world)
 
 
-@app.route('/user', methods=['post'])
-def usr():
-    return 'This is post'
+@app.route('/user')
+def usr_index():
+    user = User(1, "test")
+    return render_template('user_index.html', user=user)
 
 
 # http://127.0.0.1:5000/user/12345
