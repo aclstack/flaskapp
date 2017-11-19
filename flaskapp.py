@@ -15,6 +15,12 @@ def usr_index():
     user = User(1, "test")
     return render_template('user_index.html', user=user)
 
+#http://127.0.0.1:5000/query?id=12345
+# @app.route('/query_user')
+# def query_user():
+#     name = request.args.get('id')
+#     return render_template('user_index.html', id=name)
+
 
 # http://127.0.0.1:5000/user/12345
 @app.route('/user/<num>')
@@ -22,11 +28,12 @@ def user_id(num):
     return 'Hello' + num
 
 
-# http://127.0.0.1:5000/query?id=12345
-@app.route('/query')
-def query():
-    num = request.args.get('id')
-    return 'you input id is: ' + num
+@app.route('/query_user/<user_id>')
+def query_user(user_id):
+    user = None
+    if int(user_id) == 1:
+        user = User(1, 'Mike')
+    return render_template('user_id.html', user=user)
 
 
 @app.route('/ad')
@@ -42,5 +49,3 @@ def route():
 
 if __name__ == '__main__':
     app.run()
-
-#测试
