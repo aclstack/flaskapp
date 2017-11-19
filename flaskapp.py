@@ -36,9 +36,23 @@ def query_user(user_id):
     return render_template('user_id.html', user=user)
 
 
-@app.route('/ad')
-def ad():
-    return 'ok'
+@app.route('/users')
+def user_list():
+    users = []
+    for i in range(1,11):
+        user = User(i, 'Mike' + str(i))
+        users.append(user)
+    return render_template('user_list.html', users=users)
+
+
+@app.route('/one')
+def one():
+    return render_template('one_base.html')
+
+
+@app.route('/two')
+def two():
+    return render_template('two_base.html')
 
 
 # 反向路由
