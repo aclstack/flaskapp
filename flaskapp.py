@@ -21,7 +21,7 @@ def usr_index():
     user = User(1, "test")
     return render_template('user_index.html', user=user)
 
-#http://127.0.0.1:5000/query?id=12345
+# http://127.0.0.1:5000/query?id=12345
 # @app.route('/query_user')
 # def query_user():
 #     name = request.args.get('id')
