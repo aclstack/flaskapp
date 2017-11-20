@@ -90,12 +90,13 @@ def new():
     if request.method == 'POST':
         username = MyForm.username.data
         password = MyForm.password.data
-        if username == 'admin' and password == '123456':
+        if username == 'admin' and password == '123456' and MyForm.validate():
             return redirect('https://www.baidu.com')
         else:
             message = 'Login Failed'
             return render_template('new.html', form=MyForm, message=message)
     return render_template('new.html', form=MyForm)
+
 
 @app.errorhandler(404)
 def not_found(e):
