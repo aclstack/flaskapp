@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div align="center">
+        <h1>{% if message %} {{ message }}{% endif %}</h1>
+    <form action="/login" method="post">
+        <h1>Login in</h1>
+        <input type="text" name="username" value={{ username }}>
+        <br>
+        {{ get_flashed_messages(category_filter=["user_error"])[0] }}
+        <br>
+        <input type="password" name="password" value={{ password }}>
+        <br>
+        {{ get_flashed_messages(category_filter=["password_error"])[0] }}
+        <br>
+        <input type="reset" name="重置">
+        <input type="submit" name="提交">
+    </form>
+    </div>
+</body>
+</html>
