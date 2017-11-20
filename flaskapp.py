@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, url_for, render_template, flash, abort, redirect
-from models import User
+from models import User, LoginForm
 
 # 让flash支持中文输出
 import sys
@@ -83,6 +83,19 @@ def login():
             return render_template('login.html', message=message)
     return render_template('login.html')
 
+
+@app.route('/new', methods=['GET', 'POST'])
+def new():
+    MyForm = LoginForm(request.form)
+    if request.method == 'POST':
+        username = MyForm.username.data
+        password = MyForm.password.data
+        if username == 'admin' and password == '123456':
+            return redirect('https://www.baidu.com')
+        else:
+            message = 'Login Failed'
+            return render_template('new.html', form=MyForm, message=message)
+    return render_template('new.html', form=MyForm)
 
 @app.errorhandler(404)
 def not_found(e):
