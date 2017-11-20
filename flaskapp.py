@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import Flask, request, url_for, render_template, flash, abort
+from flask import Flask, request, url_for, render_template, flash, abort, redirect
 from models import User
 
 # 让flash支持中文输出
@@ -65,24 +65,23 @@ def two():
     return render_template('two_base.html')
 
 
-@app.route('/login', methods=['post'])
+@app.route('/login', methods=['GET', 'post'])
 def login():
-    form = request.form
-    username = form.get('username')
-    password = form.get('password')
-    if not username:
-        flash('please input user')
-        return render_template('index.html')
-    if not password:
-        flash('please input password')
-        return render_template('index.html')
-
-    if username == 'admin' and password == '123456':
-        flash('Hello admin welcome to login')
-        return render_template('index.html')
-    else:
-        flash('username or password is error')
-    return render_template('index.html')
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if not username:
+            flash('请输入用户名', 'user_error')
+            return render_template('login.html', username=username, password=password)
+        if not password:
+            flash('请输入密码', 'password_error')
+            return render_template('login.html', username=username, password=password)
+        if username == 'admin' and password == '123456':
+            return redirect('https://www.baidu.com')
+        else:
+            message = 'Login Failed'
+            return render_template('login.html', message=message)
+    return render_template('login.html')
 
 
 @app.errorhandler(404)
@@ -93,6 +92,7 @@ def not_found(e):
 @app.errorhandler(500)
 def not_found(e):
     return render_template('500.html')
+
 
 # 反向路由
 @app.route('/route')
