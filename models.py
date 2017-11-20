@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from wtforms import Form, TextField, PasswordField, validators
 
 
 class User(object):
@@ -7,3 +8,6 @@ class User(object):
         self.username = username
 
 
+class LoginForm(Form):
+    username = TextField("username", [validators.Required()])
+    password = PasswordField("password", [validators.Required()])
