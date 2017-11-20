@@ -3,3 +3,8 @@
 pip install Flask-wtf
 ```
 wtf = what's the fuck ???
+
+引用
+```
+from wtforms import Form
+```
