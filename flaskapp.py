@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, url_for, render_template, flash, abort, redirect
 from models import User, LoginForm
-
+from db import add_user
 # 让flash支持中文输出
 import sys
 reload(sys)
@@ -97,6 +97,28 @@ def new():
             return render_template('new.html', form=MyForm, message=message)
     return render_template('new.html', form=MyForm)
 
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    reform = LoginForm(request.form)
+    if request.method == 'POST':
+        username = reform.username.data
+        password = reform.password.data
+        if not username:
+            flash('账号不能为空', 'user_error')
+            return render_template('register.html', form=reform)
+        if not password:
+            flash('密码不能为空', 'pass_error')
+            return render_template('register.html', form=reform)
+        mysql_result = add_user(username, password)
+        if mysql_result == 1062:
+            message = '用户名已存在'
+            return render_template('register.html', form=reform, message=message)
+        else:
+            message = '用户注册成功'
+            return render_template('register.html', form=reform, message=message)
+    else:
+        return render_template('register.html', form=reform)
 
 @app.errorhandler(404)
 def not_found(e):

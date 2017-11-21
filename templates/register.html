@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sign up</title>
+</head>
+<body>
+    <div align="center">
+        <h1>账号注册</h1>
+        <form action="/register" method="post">
+        账号:{{ form.username }}
+        <br>
+        {{ get_flashed_messages(category_filter=["user_error"])[0] }}
+        <br>
+        密码:{{ form.password }}
+        <br>
+        {{ get_flashed_messages(category_filter=["pass_error"])[0] }}
+        <br>
+        <input type="reset" name="重置">
+        <input type="submit" name="注册">
+         <h1> {% if message %} {{ message }}{% endif %} </h1>
+    </form>
+
+    </div>
+</body>
+</html>
