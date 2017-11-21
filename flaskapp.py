@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, url_for, render_template, flash, abort, redirect
 from models import User, LoginForm
-from db import add_user
+from db import add_user, check_user
 # 让flash支持中文输出
 import sys
 reload(sys)
@@ -68,15 +68,16 @@ def two():
 @app.route('/login', methods=['GET', 'post'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form['username'].replace(' ', '')
+        password = request.form['password'].replace(' ', '')
         if not username:
             flash('请输入用户名', 'user_error')
             return render_template('login.html', username=username, password=password)
         if not password:
             flash('请输入密码', 'password_error')
             return render_template('login.html', username=username, password=password)
-        if username == 'admin' and password == '123456':
+        check_result = check_user(username, password)
+        if check_result == 1:
             return redirect('https://www.baidu.com')
         else:
             message = 'Login Failed'
@@ -102,8 +103,8 @@ def new():
 def register():
     reform = LoginForm(request.form)
     if request.method == 'POST':
-        username = reform.username.data
-        password = reform.password.data
+        username = reform.username.data.replace(' ', '')
+        password = reform.password.data.replace(' ', '')
         if not username:
             flash('账号不能为空', 'user_error')
             return render_template('register.html', form=reform)
@@ -119,6 +120,7 @@ def register():
             return render_template('register.html', form=reform, message=message)
     else:
         return render_template('register.html', form=reform)
+
 
 @app.errorhandler(404)
 def not_found(e):

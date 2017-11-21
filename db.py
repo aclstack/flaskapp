@@ -20,3 +20,14 @@ def add_user(username, password):
         return MySQL_error.args[0]
     conn.close()
 
+
+def check_user(username,password):
+    password = hashlib.md5(password).hexdigest()
+    sql = "select name from user where name='%s' and passwd='%s'" % (username, password)
+    try:
+        return cur.execute(sql)
+    except MySQLdb.Error, MySQL_error:
+        return 0
+    conn.close()
+
+
