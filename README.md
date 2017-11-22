@@ -2,6 +2,7 @@
 ```
 pip install Flask-wtf
 pip install mysql-python
+pip install Flask-SQLALchemy
 ```
 如果你是windows安装mysql-python非常的费事，因此你只需要安装
 项目里的两个EXE即可先安装VCForPython27.msi
