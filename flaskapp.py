@@ -76,7 +76,8 @@ def login():
         if not password:
             flash('请输入密码', 'password_error')
             return render_template('login.html', username=username, password=password)
-        check_result = check_user(username, password)
+        u = User(username,password)
+        check_result = u.check_user()
         if check_result == 1:
             return redirect('https://www.baidu.com')
         else:

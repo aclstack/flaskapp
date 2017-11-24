@@ -47,8 +47,14 @@ class User(db.Model):
             if 'Duplicate entry' in e.args[0]:
                 return 1062
 
+    def check_user(self):
+        result = User.query.filter_by(username=self.username, password=self.password).first()
+        if result is None:
+            return 0
+        else:
+            return 1
+
 # 初始化表结构
 # db.create_all()
 
-# print type(u.add())
 
