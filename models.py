@@ -2,7 +2,7 @@
 from wtforms import Form, TextField, PasswordField, validators
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
+import hashlib
 
 # class User(object):
 #     def __init__(self, user_id, username):
@@ -35,7 +35,7 @@ class User(db.Model):
     def __init__(self, username, password):
 
         self.username = username
-        self.password = password
+        self.password = hashlib.md5(password).hexdigest()
 
     def add(self):
         try:
@@ -44,12 +44,11 @@ class User(db.Model):
             return self.id
         except Exception, e:
             db.session.rollback()
-            return e.args[0]
-
-
+            if 'Duplicate entry' in e.args[0]:
+                return 1062
 
 # 初始化表结构
 # db.create_all()
-u = User('Mike1234', '123456')
-print u.add()
+
+# print type(u.add())
 

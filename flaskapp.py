@@ -105,13 +105,16 @@ def register():
     if request.method == 'POST':
         username = reform.username.data.replace(' ', '')
         password = reform.password.data.replace(' ', '')
+
         if not username:
             flash('账号不能为空', 'user_error')
             return render_template('register.html', form=reform)
         if not password:
             flash('密码不能为空', 'pass_error')
             return render_template('register.html', form=reform)
-        mysql_result = add_user(username, password)
+        # mysql_result = add_user(username, password)
+        u = User(username, password)
+        mysql_result = u.add()
         if mysql_result == 1062:
             message = '用户名已存在'
             return render_template('register.html', form=reform, message=message)
