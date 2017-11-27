@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form action="/show" method="post">
+        内容: {{ form.content }}
+        <br>
+        作者: {{ form.sender }}
+        <br>
+        <input type="submit" name="发布">
+    </form>
+    <h1>{{ get_flashed_messages()[0] }}</h1>
+    <br>
+</div>
+
+<br>
+<h1>文章列表</h1>
+{% for i in article %}
+    {{ i.content }} 作者: {{ i.sender }}<br>
+{% endfor %}
+</body>
+</html>

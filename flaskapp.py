@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, url_for, render_template, flash, abort, redirect
-from models import User, LoginForm
-from db import add_user, check_user
+from models import User, LoginForm, PublishForm, Enrty
+# from db import add_user, check_user
 # 让flash支持中文输出
 import sys
 reload(sys)
@@ -124,6 +124,27 @@ def register():
             return render_template('register.html', form=reform, message=message)
     else:
         return render_template('register.html', form=reform)
+
+
+@app.route("/show", methods=['GET', 'POST'])
+def show():
+    MyForm = PublishForm(request.form)
+    if request.method == 'GET':
+        article = Enrty('', '').getALLEnrty()
+        return render_template('article.html', article=article, form=MyForm)
+    else:
+
+        if MyForm.content.data != '' and MyForm.sender.data != '':
+            note = Enrty(MyForm.content.data, MyForm.sender.data)
+            note.add()
+            article = Enrty('', '').getALLEnrty()
+            MyForm.content.data = ''
+            MyForm.sender.data = ''
+            return render_template('article.html ', article=article, form=MyForm)
+        else:
+            article = Enrty('', '').getALLEnrty()
+            flash("内容或作者没有填写")
+            return render_template('article.html ', article=article, form=MyForm)
 
 
 @app.errorhandler(404)
