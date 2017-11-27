@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, url_for, render_template, flash, abort, redirect
 from models import User, LoginForm, PublishForm, Enrty
+from user import *
 # from db import add_user, check_user
 # 让flash支持中文输出
 import sys
@@ -10,6 +11,7 @@ sys.setdefaultencoding('utf8')
 app = Flask(__name__)
 app.secret_key = '1234'
 
+app.register_blueprint(user, url_prefix='/user')
 
 @app.route('/')
 def hello_world():
@@ -29,13 +31,13 @@ def usr_index():
 
 
 # http://127.0.0.1:5000/user/12345
-@app.route('/user/<user_id>')
-def user_id(user_id):
-    if int(user_id) == 1:
-        flash('欢迎你 张三同学')
-        return render_template('user.html')
-    else:
-        abort(404)
+# @app.route('/user/<user_id>')
+# def user_id(user_id):
+#     if int(user_id) == 1:
+#         flash('欢迎你 张三同学')
+#         return render_template('user.html')
+#     else:
+#         abort(404)
 
 
 @app.route('/query_user/<user_id>')

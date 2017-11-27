@@ -21,8 +21,8 @@ class PublishForm(Form):
 # 实例化一个对象
 app = Flask(__name__)
 # 设置数据库信息
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:123456@192.168.31.100/teacher"
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:123456@192.168.56.13/teacher"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:123456@192.168.31.100/teacher"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:123456@192.168.56.13/teacher"
 # 忽略警告
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 # 生成db对象
@@ -57,6 +57,9 @@ class User(db.Model):
             return 0
         else:
             return 1
+
+    def getUsername(self):
+        return self.username
 
 
 class Enrty(db.Model):
