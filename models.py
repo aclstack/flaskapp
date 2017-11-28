@@ -54,9 +54,9 @@ class User(db.Model):
     def check_user(self):
         result = User.query.filter_by(username=self.username, password=self.password).first()
         if result is None:
-            return 0
+            return False
         else:
-            return 1
+            return True
 
     def getUsername(self):
         return self.username
