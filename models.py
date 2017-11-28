@@ -35,6 +35,7 @@ class User(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     username = db.Column(db.String(32), unique=True)
     password = db.Column(db.String(32))
+    age = db.Column(db.Integer)
 
     def __init__(self, username, password):
 
