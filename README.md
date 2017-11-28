@@ -7,7 +7,8 @@ pip install flask-restful
 pip install Flask-Migrate
 pip install Flask-Script
 python migrater.py db init 数据库初始化并保留版本
-python migrater.py db migrate 更新数据库字段
+python migrater.py db migrate 检测数据库信息
+python migrater.py db upgrade 执行更新
 ```
 如果你是windows安装mysql-python非常的费事，因此你只需要安装
 项目里的两个EXE即可先安装VCForPython27.msi
